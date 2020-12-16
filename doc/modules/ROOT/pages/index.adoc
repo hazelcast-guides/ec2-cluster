@@ -117,7 +117,7 @@ image::ss5.3-create-instance.png[]
 
 
 * Next, add a unique tag to the instances. This is optional but recommended if your AWS account has many running
-instances associated with. We will configure Hazelcast to filter discovered EC2 instances based on this tag:
+instances associated with:
 
 image::ss5.4-create-instance.png[]
 
@@ -155,41 +155,7 @@ sudo mv bintray-hazelcast-rpm.repo /etc/yum.repos.d/ && \
 sudo yum install hazelcast
 ----
 
-* Verify that it is installed:
-
-[source, shell]
-----
-hz --version
-----
-
-
-* Create a Hazelcast configuration now. A minimal configuration with AWS discovery enabled will look like the yaml
-configuration below. Note that `tag-key` and `tag-value` must be the properties you set in the previous step. Hazelcast
-will filter the available instances in based on this tag and won't attempt to connect if the tag does not match.
-
-[source, shell]
-----
-cat <<EOT >> hazelcast.yaml
-hazelcast:
-  network:
-    join:
-      multicast:
-        enabled: false
-      aws:
-        enabled: true
-        tag-key: cluster-tag
-        tag-value: guide-ec2-cluster
-EOT
-----
-
-[NOTE]
-====
-By default, Hazelcast will use the current region, the IAM Role attached to EC2 instance and the port range 5701-5708
-to discover other Hazelcast members in other instances. You can find all discovery configuration details on
-{aws-plugin-url}[Hazelcast AWS discovery plugin] documentation.
-====
-
-Now start Hazelcast members in both EC2 instances:
+* Now start Hazelcast members in both EC2 instances:
 
 [source, shell]
 ----
@@ -205,6 +171,25 @@ Members {size:2, ver:2} [
 	Member [10.0.y.y]:5701 - 3e8b66fc-52eb-4379-ae11-4b6e30549055 this
 ]
 ----
+
+[NOTE]
+====
+By default, Hazelcast will use the current region, the IAM Role attached to EC2 instance and the port range 5701-5708
+to discover other Hazelcast members in other instances. You can configure Hazelcast such that it tries to connect
+to certain EC2 instances only. For instance, if you use the tag from `Section 5`, Hazelcast will filter the available
+instances based on this tag and won't attempt to connect if the tag does not match:
+
+[source, shell]
+----
+export HZ_NETWORK_JOIN_AWS_ENABLED=true
+export HZ_NETWORK_JOIN_AWS_TAGKEY=cluster-tag
+export HZ_NETWORK_JOIN_AWS_TAGVALUE=guide-ec2-cluster
+hz start
+----
+
+You can find all discovery configuration details on {aws-plugin-url}[Hazelcast AWS discovery plugin] documentation.
+====
+
 
 == Summary
 
