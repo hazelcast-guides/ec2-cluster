@@ -18,14 +18,8 @@ If you already have these configured you can skip them. However, make sure that 
 creating instances:
 
 * [x] Have an IAM role with `ec2:DescribeInstances` permission
-* [x] Have a security group with ports 5701-5708 (or whatever to be used by Hazelcast) opened
+* [x] Have a security group with at least port 5701 open
 * [x] Able to establish SSH connections to instances
-====
-
-[NOTE]
-====
-The configurations below are not appropriate and not secure for production environments and should be used
-only in test environments.
 ====
 
 == 1) Configuring VPC
@@ -38,14 +32,14 @@ Under `VPC > Your VPCs` section of AWS console, create a new VPC and give it a n
 
 image::ss1-create-vpc.png[]
 
-==== 1.1.a) Create an Internet Gateway
+==== 1.1.1) Create an Internet Gateway
 
 Now create an internet gateway to be attached to your VPC. You will need this gateway to establish SSH connections to
 instances:
 
 image::ss1.1.1-create-igw.png[]
 
-==== 1.1.b) Attach the Internet Gateway
+==== 1.1.2) Attach the Internet Gateway
 
 After creating an internet gateway, attach it to your VPC on `VPC > Internet gateways > Attach to VPC` section.
 Choose the VPC you just created among the available ones:
@@ -64,7 +58,7 @@ Under `Routes` tab, you need the default one (`0.0.0.0/0`) listed. `Edit routes`
 
 image::ss1.2.2-list-routes.png[]
 
-As target, pick the internet gateway you created in section `1.1.a` and save:
+As target, pick the internet gateway you created in section `1.1.1` and save:
 
 image::ss1.2.3-add-route.png[]
 
@@ -90,8 +84,8 @@ image::ss3-create-iam-with-permission.png[]
 == 4) Create a Security Group
 
 As the last step, under `VPC > Security Groups` create a security group in your VPC with the proper inbound rules
-for Hazelcast. Although we need only 5701 in this guide, allow the port range 5701-5708 among inbound rules as it's
-the default range for Hazelcast AWS discovery plugin. Do not forget to allow SSH port also:
+for Hazelcast. Allow port 5701 among inbound rules as it's the default port of Hazelcast. If you plan to run more
+than one Hazelcast member on an EC2 Instance, then you should open more ports. Also, do not forget to allow SSH port:
 
 image::ss4-create-security-group.png[]
 
@@ -122,9 +116,7 @@ instances associated with. We will configure Hazelcast to filter discovered EC2 
 image::ss5.4-create-instance.png[]
 
 
-* Finally, select the security group you created above. You also can use different security groups for different
-instances as long as you do not set `security-group-name` property in Hazelcast AWS configuration (more on configuration
-details in the next section):
+* Finally, select the security group you created above:
 
 image::ss5.5-create-instance.png[]
 
