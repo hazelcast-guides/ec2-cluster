@@ -146,34 +146,22 @@ https://aws.amazon.com/tr/premiumsupport/knowledge-center/ec2-linux-ssh-troubles
 in AWS documentation.
 ====
 
-* After SSH connection is established, install JDK8 (or any newer version) to the instances:
+* After SSH connection is established, install Hazelcast CLI to the instances:
 
 [source, shell]
 ----
-sudo yum -y update && sudo yum install java-1.8.0-openjdk
+wget https://bintray.com/hazelcast/rpm/rpm -O bintray-hazelcast-rpm.repo && \
+sudo mv bintray-hazelcast-rpm.repo /etc/yum.repos.d/ && \
+sudo yum install hazelcast
 ----
 
 * Verify that it is installed:
 
 [source, shell]
 ----
-java -version
+hz --version
 ----
 
-* Now, let's install Hazelcast JAR. Do not forget to set *HZ_VERSION* variable or change the URL with the version you use:
-
-[source, shell]
-----
-JAR_URL="https://repo1.maven.org/maven2/com/hazelcast/hazelcast-all/${HZ_VERSION}/hazelcast-all-${HZ_VERSION}.jar"
-curl -sf -O -L $JAR_URL
-----
-
-[NOTE]
-====
-To make instances find each other and form a cluster, {aws-plugin-url}[Hazelcast AWS plugin]
-must be used. This is included in `hazelcast-all` and you are all set if you downloaded from the URL above. Otherwise,
-you need to include `hazelcast-aws` explicitly.
-====
 
 * Create a Hazelcast configuration now. A minimal configuration with AWS discovery enabled will look like the yaml
 configuration below. Note that `tag-key` and `tag-value` must be the properties you set in the previous step. Hazelcast
@@ -205,7 +193,7 @@ Now start Hazelcast members in both EC2 instances:
 
 [source, shell]
 ----
-java -jar hazelcast-all-${HZ_VERSION}.jar
+hz start
 ----
 
 When Hazelcast members find each other, you will see a log similar to below for each instance:
