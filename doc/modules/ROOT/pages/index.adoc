@@ -13,11 +13,11 @@ forming a cluster using {aws-plugin-url}[Hazelcast AWS plugin].
 
 [NOTE]
 ====
-Steps 1 to 4 cover the creation and the configuration of VPC, internet gateway, route table, subnet and IAM rule.
+Steps 1 to 4 cover the creation and the configuration of VPC, internet gateway, route table, subnet and IAM role.
 If you already have these configured you can skip them. However, make sure that you have these properties before
 creating instances:
 
-* [x] Have an IAM rule with `ec2:DescribeInstances` permission
+* [x] Have an IAM role with `ec2:DescribeInstances` permission
 * [x] Have a security group with ports 5701-5708 (or whatever to be used by Hazelcast) opened
 * [x] Able to establish SSH connections to instances
 ====
@@ -60,7 +60,7 @@ Under the VPC description, navigate to route table shown in the orange box:
 
 image::ss1.2.1-nav-to-routes.png[]
 
-Under `Routes` tab, ypu need the default one (`0.0.0.0/0`) listed. `Edit routes` to add this one:
+Under `Routes` tab, you need the default one (`0.0.0.0/0`) listed. `Edit routes` to add this one:
 
 image::ss1.2.2-list-routes.png[]
 
@@ -79,9 +79,9 @@ image::ss2-create-subnet.png[]
 
 == 3) Create an IAM Role
 
-The EC2 instances we will create need your IAM role to have `ec2:DescribeInstances` permission. This way, Hazelcast
-members will be able to fetch other instance IPs and connect them dynamically. If you already have an IAM role, check
-for the permission. Otherwise, create a new one under `IAM > Roles` section with the mentioned permission. For instance,
+The EC2 instances we will create need the IAM role to have `ec2:DescribeInstances` permission. This way, Hazelcast
+members are able to fetch other instance IPs and connect them dynamically. If you already have an IAM role, check
+the permissions. Otherwise, create a new one under the `IAM > Roles` section. For instance,
 `AmazonEC2ReadOnlyAccess` policy contains `DescribeInstances` permission and is enough to complete this guide:
 
 image::ss3-create-iam-with-permission.png[]
