@@ -76,7 +76,13 @@ image::ss2-create-subnet.png[]
 The EC2 instances we will create need the IAM role to have `ec2:DescribeInstances` permission. This way, Hazelcast
 members are able to fetch other instance IPs and connect them dynamically. If you already have an IAM role, check
 the permissions. Otherwise, create a new one under the `IAM > Roles` section. For instance,
-`AmazonEC2ReadOnlyAccess` policy contains `DescribeInstances` permission and is enough to complete this guide:
+`AmazonEC2ReadOnlyAccess` policy contains `DescribeInstances` permission and is enough to complete this guide.
+
+* Create a new role on `Access Management > Role > Create Role` section for EC2 use case:
+
+image::ss3-create-iam-role.png[]
+
+* Attach permission policies for the role:
 
 image::ss3-create-iam-with-permission.png[]
 
