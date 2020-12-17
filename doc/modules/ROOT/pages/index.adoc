@@ -2,7 +2,7 @@
 :templates-url: templates:ROOT:page$/
 :aws-plugin-url: https://github.com/hazelcast/hazelcast-aws
 
-= Deploy Hazelcast Cluster on EC2
+= Deploy Hazelcast Cluster on AWS EC2
 
 This guide will get you started to create a Hazelcast cluster on EC2.
 
@@ -24,11 +24,11 @@ creating instances:
 
 == 1) Configuring VPC
 
-Let's start with creating a VPC on which our instances will run:
+Let's start with creating a VPC on which our instances will run.
 
 === 1.1) Create a VPC
 
-Under `VPC > Your VPCs` section of AWS console, create a new VPC and give it a name you can remember in the next steps.
+Under `VPC > Your VPCs` section of AWS console, create a new VPC and give it a name you can remember in the next steps:
 
 image::ss1-create-vpc.png[]
 
@@ -48,7 +48,7 @@ image::ss1.1.2-attach-igw.png[]
 
 === 1.2) Add Default Route
 
-Now add default route to the route table. This step will make you able to connect to instances via SSH.
+Now add the default route to the route table. This step will make you able to connect to instances via SSH.
 
 Under the VPC description, navigate to route table shown in the orange box:
 
@@ -58,7 +58,7 @@ Under `Routes` tab, you need the default one (`0.0.0.0/0`) listed. `Edit routes`
 
 image::ss1.2.2-list-routes.png[]
 
-As target, pick the internet gateway you created in section `1.1.1` and save:
+As the target, pick the internet gateway you created in section `1.1.1` and save:
 
 image::ss1.2.3-add-route.png[]
 
@@ -174,7 +174,7 @@ Members {size:2, ver:2} [
 
 [NOTE]
 ====
-By default, Hazelcast will use the current region, the IAM Role attached to EC2 instance and the port range 5701-5708
+By default, Hazelcast will use the current region, the IAM Role attached to the EC2 instance and the port range 5701-5708
 to discover other Hazelcast members in other instances. You can configure Hazelcast such that it tries to connect
 to certain EC2 instances only. For instance, if you use the tag from `Section 5`, Hazelcast will filter the available
 instances based on this tag and won't attempt to connect if the tag does not match:
