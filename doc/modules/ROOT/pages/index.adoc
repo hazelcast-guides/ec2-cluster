@@ -150,8 +150,8 @@ in AWS documentation.
 
 [source, shell]
 ----
-wget https://bintray.com/hazelcast/rpm/rpm -O bintray-hazelcast-rpm.repo && \
-sudo mv bintray-hazelcast-rpm.repo /etc/yum.repos.d/ && \
+wget https://bintray.com/hazelcast/rpm/rpm -O bintray-hazelcast-rpm.repo
+sudo mv bintray-hazelcast-rpm.repo /etc/yum.repos.d/
 sudo yum install hazelcast
 ----
 
