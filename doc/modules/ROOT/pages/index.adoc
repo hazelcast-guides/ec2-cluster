@@ -468,7 +468,8 @@ Also a tag named "cluster-tag" with "guide-ec2-cluster" value will be assigned t
 
 [source, shell]
 ----
-$ aws ec2 run-instances --image-id ami-04d29b6f966df1537 \
+$ aws ec2 run-instances \
+    --image-id resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2 \
     --count 2 --instance-type t2.micro \
     --key-name *********** \
     --security-group-ids sg-*********** \
@@ -494,10 +495,10 @@ Finally, fetch the public IPs of the instances to establish SSH connections in t
 ----
 $ aws ec2 describe-instances \
     --instance-ids i-xxxxxxxxxxxxxxxxx i-yyyyyyyyyyyyyyyyy \
-    | grep PublicIpAddress
+    --query 'Reservations[*].Instances[*].PublicIpAddress'
 
-PublicIpAddress: 5.10.x.y
-PublicIpAddress: 6.12.x.y
+- 5.10.x.y
+- 6.12.x.y
 ----
 --
 ====
