@@ -1,3 +1,4 @@
 name: ec2-cluster
 title: Deploy Hazelcast Cluster on AWS EC2
 version: master
+
