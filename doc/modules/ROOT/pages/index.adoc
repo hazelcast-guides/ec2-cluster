@@ -11,7 +11,7 @@ This guide will get you started to create a Hazelcast cluster on EC2.
 == What You’ll Learn
 
 In this guide, you will create two EC2 instances with Hazelcast members and see them connecting each other and
-forming a cluster using {aws-plugin-url}[Hazelcast AWS plugin].
+forming a cluster via {aws-plugin-url}[Hazelcast AWS plugin].
 
 [NOTE]
 ====
@@ -24,11 +24,11 @@ creating instances:
 * [x] Able to establish SSH connections to instances
 ====
 
-== 1) Create and Configure a VPC
+== 1. Create and Configure a VPC
 
 Let's start with creating a VPC on which our instances will run.
 
-=== 1.1) Create a VPC
+=== 1.1. Create a VPC
 
 [tabs]
 ====
@@ -75,7 +75,7 @@ $ aws ec2 create-tags --resources vpc-*********** \
 --
 ====
 
-==== 1.1.1) Create an Internet Gateway
+==== 1.1.1. Create an Internet Gateway
 
 Now create an internet gateway to be attached to your VPC. You will need this gateway to establish SSH connections to
 instances:
@@ -115,7 +115,7 @@ $ aws ec2 create-tags --resources igw-************** \
 --
 ====
 
-==== 1.1.2) Attach the Internet Gateway
+==== 1.1.2. Attach the Internet Gateway
 
 After creating an internet gateway, attach it to your VPC.
 
@@ -145,7 +145,7 @@ $ aws ec2 attach-internet-gateway \
 --
 ====
 
-=== 1.2) Add Default Route
+=== 1.2. Add Default Route
 
 Now add the default route to the route table. This step will make you able to connect to instances via SSH.
 
@@ -163,7 +163,7 @@ Under `Routes` tab, you need the default one (`0.0.0.0/0`) listed. `Edit routes`
 
 image::ss1.2.2-list-routes.png[]
 
-As the target, pick the internet gateway you created in section `1.1.1` and save:
+As the target, pick the internet gateway you created in section <<1.1.1. Create an Internet Gateway,1.1.1>> and save:
 
 image::ss1.2.3-add-route.png[]
 --
@@ -209,7 +209,7 @@ $ aws ec2 create-route --route-table-id rtb-*********** \
 ====
 
 
-== 2) Create a Subnet in the VPC
+== 2. Create a Subnet in the VPC
 
 Let's continue with creating a subnet in the VPC.
 
@@ -263,7 +263,7 @@ $ aws ec2 create-tags --resources subnet-*********** \
 ====
 
 
-== 3) Create an IAM Role
+== 3. Create an IAM Role
 
 The EC2 instances we will create need the IAM role to have `ec2:DescribeInstances` permission. This way, Hazelcast
 members are able to fetch other instance IPs and connect them dynamically. If you already have an IAM role, check
@@ -362,7 +362,7 @@ $ aws iam add-role-to-instance-profile \
 --
 ====
 
-== 4) Create a Security Group
+== 4. Create a Security Group
 
 As the last step, create a security group in your VPC with the proper inbound rules
 for Hazelcast. Allow port 5701 among inbound rules as it's the default port of Hazelcast. If you plan to run more
@@ -418,7 +418,7 @@ $ aws ec2 authorize-security-group-ingress \
 --
 ====
 
-== 5) Create EC2 Instances
+== 5. Create EC2 Instances
 
 [tabs]
 ====
@@ -503,7 +503,7 @@ $ aws ec2 describe-instances \
 --
 ====
 
-== 6) Create a Hazelcast Cluster
+== 6. Create a Hazelcast Cluster
 
 * Now that you have 2 instances running with the same IAM role, let's connect to each of them via SSH:
 
