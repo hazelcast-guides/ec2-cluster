@@ -1,20 +1,21 @@
-:github-address: https://github.com/hazelcast-guides/ec2-cluster
+= Deploy Hazelcast Cluster on AWS EC2
 :templates-url: templates:ROOT:page$/
 :aws-plugin-url: https://github.com/hazelcast/hazelcast-aws
 :tab-header-console: AWS Console
 :tab-header-cli: AWS CLI
-
-= Deploy Hazelcast Cluster on AWS EC2
-
-This guide will get you started to create a Hazelcast cluster on EC2.
+:page-layout: tutorial
+:page-product:
+:page-categories: Deployment, AWS
+:page-lang: 
+:page-est-time: 20 mins
+:description: In this tutorial, you will create two EC2 instances with Hazelcast members and see them connecting to each other and forming a cluster via Hazelcast AWS plugin.
 
 == What You’ll Learn
 
-In this guide, you will create two EC2 instances with Hazelcast members and see them connecting each other and
-forming a cluster via {aws-plugin-url}[Hazelcast AWS plugin].
+{description}
 
-[NOTE]
-====
+== Before you Begin
+
 Steps 1 to 4 cover the creation and the configuration of VPC, internet gateway, route table, subnet and IAM role.
 If you already have these configured you can skip them. However, make sure that you have these properties before
 creating instances:
@@ -22,7 +23,6 @@ creating instances:
 * [x] Have an IAM role with `ec2:DescribeInstances` permission
 * [x] Have a security group with at least port 5701 open
 * [x] Able to establish SSH connections to instances
-====
 
 == 1. Create and Configure a VPC
 
@@ -566,12 +566,12 @@ You can find all discovery configuration details on {aws-plugin-url}[Hazelcast A
 
 == Summary
 
-In this guide, you created all AWS components you need to form a Hazelcast cluster on EC2. Then you started
+In this tutorial, you created all AWS components you need to form a Hazelcast cluster on EC2. Then you started
 two Hazelcast members on two different EC2 instances and saw them connecting each other and forming a cluster.
 If you created more EC2 instances and Hazelcast members in the same way, these members would also find each other
 and they all would form a single cluster.
 
 == See Also
 
-- xref:terraform-quickstarts:ROOT:index.adoc[Deploy Hazelcast Cluster with Terraform]
-- xref:ecs-embedded:ROOT:index.adoc[Deploy Hazelcast Applications on ECS]
+- xref:terraform-quickstarts.adoc[]
+- xref:ecs-embedded.adoc[]
